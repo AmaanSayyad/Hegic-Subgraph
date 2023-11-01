@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: HEGICTokenIOU
+    network: mainnet
+    source:
+      address: "0x47C0aD2aE6c0Ed4bcf7bc5b380D7205E89436e84"
+      abi: HEGICTokenIOU
+      startBlock: 11092918
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Transfer
+      abis:
+        - name: HEGICTokenIOU
+          file: ./abis/HEGICTokenIOU.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/hegic-token-iou.ts
